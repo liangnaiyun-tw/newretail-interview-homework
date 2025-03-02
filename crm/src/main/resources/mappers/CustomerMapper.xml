@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.crm.persistence.mapper.CustomerMapper">
+
+    <resultMap id="CustomersFilteredByOrderResultMap" type="com.example.crm.dto.CustomersFilteredByOrderDto">
+        <result column="id" property="id"></result>
+        <result column="first_name" property="firstName"></result>
+        <result column="last_name" property="lastName"></result>
+        <result column="full_name" property="fullName"></result>
+        <result column="phone" property="phone"></result>
+        <result column="email" property="email"></result>
+        <result column="created_at" property="createdAt"></result>
+        <result column="updated_at" property="updatedAt"></result>
+        <result column="order_id" property="orderId"></result>
+        <result column="order_date" property="orderDate"></result>
+        <result column="order_amount" property="orderAmount"></result>
+    </resultMap>
+    <select id="getCustomersFilteredByOrder" parameterType="com.example.crm.dto.OrderDto" resultMap="CustomersFilteredByOrderResultMap">
+        SELECT c.*, o.id AS order_id, o.order_date, o.amount as order_amount
+        FROM customer c
+                 JOIN (
+            SELECT customer_id, MAX(order_date) AS recent_order_date
+            FROM `order`
+            WHERE order_date &gt;= Date(NOW()) - INTERVAL #{intervalDays} DAY
+            AND order_date &lt; NOW()
+            AND amount &gt;= #{amount}
+            GROUP BY customer_id
+        ) recent_orders ON c.id = recent_orders.customer_id
+                 JOIN `order` o ON c.id = recent_orders.customer_id AND o.order_date = recent_orders.recent_order_date
+        WHERE o.amount &gt;= #{amount}
+    </select>
+</mapper>
