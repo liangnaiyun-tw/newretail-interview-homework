@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "a8669f15-f61a-4853-bd73-7a61af0b4147",
+		"name": "CRM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40083346"
+	},
+	"item": [
+		{
+			"name": "customers/filteredByOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 500,\r\n    \"intervalDays\": 30\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/customers/filteredByOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"customers",
+						"filteredByOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "actuator/health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/actuator/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sms/send",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customersFilteredByOrderDtos\": [\r\n        {\r\n            \"id\": 1,\r\n            \"firstName\": \"John\",\r\n            \"lastName\": \"Doe\",\r\n            \"fullName\": \"John Doe\",\r\n            \"phone\": \"0912345678\",\r\n            \"email\": \"john.doe@example.com\",\r\n            \"createdAt\": \"2025-02-27T10:23:04.000+00:00\",\r\n            \"updatedAt\": \"2025-02-27T10:23:04.000+00:00\",\r\n            \"orderId\": 1,\r\n            \"orderDate\": \"2025-02-17T10:23:04.000+00:00\",\r\n            \"orderAmount\": 600.0\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"firstName\": \"Alice\",\r\n            \"lastName\": \"Johnson\",\r\n            \"fullName\": \"Alice Johnson\",\r\n            \"phone\": \"0934567890\",\r\n            \"email\": \"alice.johnson@example.com\",\r\n            \"createdAt\": \"2025-02-27T10:23:04.000+00:00\",\r\n            \"updatedAt\": \"2025-02-27T10:23:04.000+00:00\",\r\n            \"orderId\": 4,\r\n            \"orderDate\": \"2025-02-12T10:23:04.000+00:00\",\r\n            \"orderAmount\": 800.0\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"firstName\": \"Jane\",\r\n            \"lastName\": \"Smith\",\r\n            \"fullName\": \"Jane Smith\",\r\n            \"phone\": \"0923456789\",\r\n            \"email\": \"jane.smith@example.com\",\r\n            \"createdAt\": \"2025-02-27T10:23:04.000+00:00\",\r\n            \"updatedAt\": \"2025-02-27T10:23:04.000+00:00\",\r\n            \"orderId\": 6,\r\n            \"orderDate\": \"2025-02-24T10:23:04.000+00:00\",\r\n            \"orderAmount\": 550.0\r\n        }\r\n    ],\r\n    \"template\": \"親愛的 {fullName}，感謝您的支持！您本月的消費金額為 {amount} 元，別忘了查看我們的最新優惠！\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/sms/send",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"sms",
+						"send"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
