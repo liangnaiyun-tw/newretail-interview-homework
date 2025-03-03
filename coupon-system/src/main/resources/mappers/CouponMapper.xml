@@ -5,6 +5,7 @@
     <resultMap id="CouponResultMap" type="com.example.coupon_system.persistence.entity.Coupon">
         <result column="id" property="id"></result>
         <result column="name" property="name"></result>
+        <result column="quantity" property="quantity"></result>
         <result column="type" property="type"></result>
         <result column="start_date" property="startDate"></result>
         <result column="end_date" property="endDate"></result>

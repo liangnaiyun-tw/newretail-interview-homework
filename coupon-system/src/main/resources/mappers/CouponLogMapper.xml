@@ -19,7 +19,6 @@
     <select id="getLogs">
         SELECT id, user_id, coupon_id, operation_type, description, created_at
         FROM coupon_log
-
     </select>
 
 </mapper>

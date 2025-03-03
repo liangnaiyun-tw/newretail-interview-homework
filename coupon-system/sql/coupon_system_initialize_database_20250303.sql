@@ -3,6 +3,7 @@ create database if not exists coupon_system;
 create table if not exists coupon (
 	id int primary key auto_increment,
     name nvarchar(200) not null,
+    quantity int not null,
     type int not null,
     start_date datetime not null,
     end_date datetime not null,
