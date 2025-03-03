@@ -6,4 +6,5 @@ import lombok.Data;
 public class UserCouponDto {
     private int userId;
     private int couponId;
+    private int status;
 }

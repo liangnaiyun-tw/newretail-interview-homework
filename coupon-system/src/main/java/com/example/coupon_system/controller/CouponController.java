@@ -1,6 +1,7 @@
 package com.example.coupon_system.controller;
 
 import com.example.coupon_system.dto.UserCouponDto;
+import com.example.coupon_system.persistence.entity.UserCoupon;
 import com.example.coupon_system.service.ICouponService;
 import com.example.coupon_system.utils.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class CouponController {
         }
     }
 
-    @GetMapping("reset")
+    @GetMapping("/reset")
     public String resetCoupon() {
         try {
             couponService.resetCoupon();

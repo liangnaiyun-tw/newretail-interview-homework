@@ -3,12 +3,25 @@
 <mapper namespace="com.example.coupon_system.persistence.mapper.UserCouponMapper">
 
     <resultMap id="UserCouponResultMap" type="com.example.coupon_system.persistence.entity.UserCoupon">
-        <result column="id" property="id"></result>
+        <id column="id" property="id"></id>
         <result column="user_id" property="userId"></result>
         <result column="coupon_id" property="couponId"></result>
         <result column="status" property="status"></result>
         <result column="used_at" property="usedAt"></result>
         <result column="claimed_at" property="claimedAt"></result>
+        <association property="coupon" javaType="com.example.coupon_system.persistence.entity.Coupon">
+            <id column="coupon_id" property="id"></id>
+            <result column="coupon_name" property="name"></result>
+            <result column="coupon_quantity" property="quantity"></result>
+            <result column="coupon_type" property="type"></result>
+            <result column="coupon_startDate" property="startDate"></result>
+            <result column="coupon_endDate" property="endDate"></result>
+            <result column="coupon_createdAt" property="createdAt"></result>
+        </association>
+        <association property="user" javaType="com.example.coupon_system.persistence.entity.User">
+            <id column="user_id" property="id"></id>
+            <result column="user_name" property="name"></result>
+        </association>
     </resultMap>
 
     <insert id="createUserCoupon" parameterType="com.example.coupon_system.persistence.entity.UserCoupon" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -20,6 +33,25 @@
         DELETE FROM user_coupon WHERE id = #{id}
     </delete>
 
+
+    <select id="getUserCouponByUserIdAndCouponId" resultMap="UserCouponResultMap">
+        SELECT
+            uc.id, uc.user_id, uc.coupon_id, uc.status, uc.used_at, uc.claimed_at,
+            u.id AS user_id, u.name AS user_name,
+            c.id AS coupon_id, c.name AS coupon_name, c.quantity AS coupon_quantity,
+            c.type AS coupon_type, c.start_date AS coupon_startDate,
+            c.end_date AS coupon_endDate, c.created_at AS coupon_createdAt
+        FROM user_coupon uc
+                 INNER JOIN `user` u ON uc.user_id = u.id
+                 INNER JOIN coupon c ON uc.coupon_id = c.id
+        WHERE uc.user_id = #{userId} AND uc.coupon_id = #{couponId}
+    </select>
+
+    <update id="updateUserCoupon" parameterType="com.example.coupon_system.persistence.entity.UserCoupon">
+        UPDATE user_coupon
+        SET status = #{status}, used_at = #{usedAt}
+        WHERE id = #{id}
+    </update>
 
 
 </mapper>

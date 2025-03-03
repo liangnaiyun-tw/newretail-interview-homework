@@ -137,6 +137,12 @@ public class CouponService implements ICouponService {
         return !now.isBefore(startInstant) && !now.isAfter(endInstant);
     }
 
+    public boolean isCouponExpired(Coupon coupon) {
+        Instant now = Instant.now();
+        Instant endInstant = coupon.getEndDate().toInstant();
+        return now.isAfter(endInstant);
+    }
+
 
 
 

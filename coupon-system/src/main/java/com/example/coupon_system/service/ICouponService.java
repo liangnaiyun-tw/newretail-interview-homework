@@ -9,4 +9,6 @@ public interface ICouponService {
     String getCoupon(UserCouponDto userCouponDto);
     Coupon getCouponById(int id);
     void resetCoupon();
+    boolean isCouponValid(Coupon coupon);
+    boolean isCouponExpired(Coupon coupon);
 }

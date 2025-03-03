@@ -26,7 +26,7 @@ public enum UserCouponStatus {
         }
     }
 
-    public String getUserCouponStatusByCode(int code) {
+    public static String getUserCouponStatusByCode(int code) {
         return map.get(code);
     }
 
