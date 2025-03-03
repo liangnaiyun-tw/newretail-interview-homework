@@ -1,5 +1,6 @@
 package com.example.coupon_system.utils.enums;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public enum UserCouponStatus {
@@ -10,12 +11,14 @@ public enum UserCouponStatus {
     private final int code;
     private final String name;
 
+
+
     UserCouponStatus(int code, String name) {
         this.code = code;
         this.name = name;
     }
 
-    private static Map<Integer, String> map;
+    private static Map<Integer, String> map = new HashMap<>();
 
     static {
         for (UserCouponStatus userCouponStatus : UserCouponStatus.values()) {
@@ -25,5 +28,9 @@ public enum UserCouponStatus {
 
     public String getUserCouponStatusByCode(int code) {
         return map.get(code);
+    }
+
+    public int getCode() {
+        return this.code;
     }
 }
