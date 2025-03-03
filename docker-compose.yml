@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  # CRM System
+  crm-springboot-app:
+    image: crm-image:latest
+    container_name: crm
+    build:
+      context: ./crm
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/crm?serverTimezone=Asia/Taipei&characterEncoding=utf-8
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+    ports:
+      - "9001:9001"
+    depends_on:
+      - mysql
+      - rabbitmq
+    networks:
+      - app-network
+      
+  # Coupon System
+  coupon-springboot-app:
+    image: coupon-image:latest
+    container_name: coupon-system
+    build:
+      context: ./coupon-system
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/coupon_system?serverTimezone=Asia/Taipei&characterEncoding=utf-8
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+    ports:
+      - "9002:9002"
+    depends_on:
+      - mysql
+      - rabbitmq
+      - redis
+    networks:
+      - app-network
+
+  # MySQL database
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: crm
+    volumes:
+      - ./crm/sql/crm_initialize_database_20250227.sql:/docker-entrypoint-initdb.d/crm_initialize_database_20250227.sql
+      - ./coupon-system/sql/coupon_system_initialize_database_20250303.sql:/docker-entrypoint-initdb.d/coupon_system_initialize_database_20250303.sql
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+
+  # RabbitMQ server
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "15672:15672"  # RabbitMQ Management UI
+      - "5672:5672"    # RabbitMQ AMQP protocol
+    networks:
+      - app-network
+      
+  # Redis
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+# Volumes
+volumes:
+  mysql-data:
+
+# Networks
+networks:
+  app-network:
+    driver: bridge
