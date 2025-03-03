@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.coupon_system.persistence.mapper.CouponLogMapper">
+
+    <resultMap id="CouponLogResultMap" type="com.example.coupon_system.persistence.entity.CouponLog">
+        <result column="id" property="id"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="coupon_id" property="couponId"></result>
+        <result column="operation_type" property="operationType"></result>
+        <result column="description" property="description"></result>
+        <result column="created_at" property="createdAt"></result>
+    </resultMap>
+
+    <insert id="createLog" parameterType="com.example.coupon_system.persistence.entity.CouponLog" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into coupon_log (user_id, coupon_id, operation_type, description)
+        values (#{userId}, #{couponId}, #{operationType}, #{description})
+    </insert>
+
+    <select id="getLogs">
+        SELECT id, user_id, coupon_id, operation_type, description, created_at
+        FROM coupon_log
+
+    </select>
+
+</mapper>
