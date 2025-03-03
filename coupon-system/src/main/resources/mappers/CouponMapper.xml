@@ -40,7 +40,7 @@
     </select>
 
     <select id="getCoupons" resultMap="CouponResultMap">
-        select id, name, type, start_date, end_date, created_at
+        select id, name, quantity, type, start_date, end_date, created_at
         from coupon
     </select>
 

@@ -2,10 +2,11 @@ package com.example.coupon_system.persistence.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class Coupon {
+public class Coupon implements Serializable {
     private int id;
     private String name;
     private int quantity;

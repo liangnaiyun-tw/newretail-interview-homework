@@ -1,5 +1,6 @@
 create database if not exists coupon_system;
 
+use coupon_system;
 create table if not exists coupon (
 	id int primary key auto_increment,
     name nvarchar(200) not null,
@@ -36,3 +37,10 @@ create table if not exists coupon_log (
     foreign key (coupon_id) references coupon(id),
     foreign key (user_id) references `user`(id)
 );
+
+
+INSERT INTO coupon (name, quantity, type, start_date, end_date)
+VALUES 
+('滿減券 A', 100, 1, '2025-03-01 00:00:00', '2025-03-31 23:59:59'),
+('折扣券 B', 200, 2, '2025-03-05 00:00:00', '2025-04-05 23:59:59'),
+('優惠券 C', 150, 3, '2025-03-10 00:00:00', '2025-03-20 23:59:59');
